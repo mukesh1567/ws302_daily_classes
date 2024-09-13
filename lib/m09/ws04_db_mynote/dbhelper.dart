@@ -16,10 +16,10 @@ class DBHelper{
   Database? mDB;
 
   ///creating globlal variable
-  static final TABLE_NOTE_NAME = "name";
-  static final COLUMN_NOTE_ID = "note_id";
-  static final COLUMN_NOTE_TITLE = "note_title";
-  static final COLUMN_NOTE_DESC = "note_desc";
+  static final String TABLE_NOTE_NAME = "name";
+  static final String COLUMN_NOTE_ID = "note_id";
+  static final String COLUMN_NOTE_TITLE = "note_title";
+  static final String COLUMN_NOTE_DESC = "note_desc";
 
 
   Future<Database> getDB() async{

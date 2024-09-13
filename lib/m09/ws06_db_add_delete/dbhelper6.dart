@@ -16,10 +16,12 @@ class DBHelper{
   Database? mDB;
 
   ///creating globlal variable
-  static final TABLE_NOTE_NAME = "name";
-  static final COLUMN_NOTE_ID = "note_id";
-  static final COLUMN_NOTE_TITLE = "note_title";
-  static final COLUMN_NOTE_DESC = "note_desc";
+  static final String TABLE_NOTE_NAME = "name";
+  static final String COLUMN_NOTE_ID = "note_id";
+  static final String COLUMN_NOTE_TITLE = "note_title";
+  static final String COLUMN_NOTE_DESC = "note_desc";
+  static final String COLUMN_NOTE_CREATED = "note_created";
+
 
 
   Future<Database> getDB() async{
@@ -55,13 +57,13 @@ class DBHelper{
 
       ///create all your table here
       ///spacing and naming ka dhyn rkhna h
-      db.execute("create table $TABLE_NOTE_NAME ( $COLUMN_NOTE_ID integer primary key autoincrement, $COLUMN_NOTE_TITLE text, $COLUMN_NOTE_DESC text)");
+      db.execute("create table $TABLE_NOTE_NAME ( $COLUMN_NOTE_ID integer primary key autoincrement, $COLUMN_NOTE_TITLE text, $COLUMN_NOTE_DESC text, $COLUMN_NOTE_CREATED text)");
     });
 
   }
 
   ///db function(quaries create krege yaha)(insertion kr rhe)
-  Future<bool> addNote({required String title, required String desc}) async{
+  Future<bool> addNote({required String title, required String desc, required String createdAt}) async{
     ///void addNote({required String title, required String desc}) async{
     Database db = await getDB();
 
@@ -69,6 +71,7 @@ class DBHelper{
       ///COLUMN_NOTE_ID : id not given becoz autoincrement
       COLUMN_NOTE_TITLE : title,
       COLUMN_NOTE_DESC : desc,
+      COLUMN_NOTE_CREATED : createdAt,
     });
     ///queries se effect kya hua
     return rowsEffected>0;
@@ -86,7 +89,7 @@ class DBHelper{
   }
 
 
-  Future<bool> updateNote({ required String updatedTitle, required String updatedDesc, required int id}) async{
+  Future<bool> updateNote({ required String updatedTitle, required String updatedDesc, required String updatedCreate, required int id}) async{
     ///update,edit ka function, eske liye jo edit krna vo note ki id chahiye
     ///  void updateNote({ required String updatedTitle, required String updatedDesc, required int id}) async{
     var db = await getDB();
@@ -94,6 +97,7 @@ class DBHelper{
       ///db.update(TABLE_NOTE_NAME, {
       COLUMN_NOTE_TITLE : updatedTitle,
       COLUMN_NOTE_DESC : updatedDesc,
+      COLUMN_NOTE_CREATED : updatedCreate,
     },where: "$COLUMN_NOTE_ID = $id"
     );
     return rowsEffected>0;

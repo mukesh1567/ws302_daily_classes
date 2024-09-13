@@ -1,4 +1,3 @@
-/*
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -18,7 +17,6 @@ class DBHelper{
 
   Future<Database> getDB() async{
     ///value future mein aa rhi to async or await use kia
-
     if(mDB!=null){
       return mDB!;
       ///agar mDB null h to upr Database ko bhej dega
@@ -37,7 +35,6 @@ class DBHelper{
     ///fer upr openDB , Database getdb sbko async,future krna pdega
 
     ///agar open hoga to kaha hoga,getApplicationDocDir pe
-
     var appDir = await getApplicationDocumentsDirectory();
     var dbPath = join(appDir.path, "notes.db");
 
@@ -50,4 +47,4 @@ class DBHelper{
 
   }
 
-}*/
+}

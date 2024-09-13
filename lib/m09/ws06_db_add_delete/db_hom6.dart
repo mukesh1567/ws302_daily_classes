@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ws302_daily_classes/m09/ws06_db_add_delete/dbhelper6.dart';
 
 class DbHome6 extends StatefulWidget{
@@ -17,7 +18,11 @@ class _DbHome6State extends State<DbHome6> {
 
   ///ui pr dikhane k liye list bnayge
   List<Map<String, dynamic>> allNotes = [];
-
+  
+  ///format for date and time
+  DateFormat mFormat = DateFormat.yMd();
+   
+  
   @override
   void initState() {
     super.initState();
@@ -46,7 +51,20 @@ class _DbHome6State extends State<DbHome6> {
         itemCount: allNotes.length,
           itemBuilder: (_,index){
             return ListTile(
-              title: Text(allNotes[index][DBHelper.COLUMN_NOTE_TITLE]),
+
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(allNotes[index][DBHelper.COLUMN_NOTE_TITLE]),
+                  
+                  ///showing time of addnote
+                  Text(mFormat.format(DateTime.fromMillisecondsSinceEpoch(int.parse(allNotes[index][DBHelper.COLUMN_NOTE_CREATED]))),
+                  ///Text(DateTime.fromMillisecondsSinceEpoch(int.parse(allNotes[index][DBHelper.COLUMN_NOTE_CREATED])).toString(),
+                  style: TextStyle(fontSize: 10),)
+                  //Text(allNotes[index][DBHelper.COLUMN_NOTE_CREATED])
+                  ///showing error
+                ],
+              ),
               subtitle: Text(allNotes[index][DBHelper.COLUMN_NOTE_DESC]),
               ///edit or delete k liye
               trailing:
@@ -75,9 +93,11 @@ class _DbHome6State extends State<DbHome6> {
 
                   }, icon: Icon(Icons.edit)),
 
-                  IconButton(onPressed: (){
-                    bool check dbHelper.deleteNote(id: allNotes[index][DBHelper.COLUMN_NOTE_ID]);
-
+                  IconButton(onPressed: () async{
+                    bool check = await dbHelper.deleteNote(id: allNotes[index][DBHelper.COLUMN_NOTE_ID]);
+                    if (check){
+                      getMyNotes();
+                    }
                   }, icon: Icon(Icons.delete),color: Colors.red,),
                 ],
               ),),
@@ -209,6 +229,7 @@ class _DbHome6State extends State<DbHome6> {
                       check = await dbHelper.updateNote(
                           updatedTitle: titleController.text,
                           updatedDesc: descController.text,
+                          updatedCreate: DateTime.now().millisecondsSinceEpoch.toString(),
                           id: id);
                       ///title desc empty nhe hoga to add hoga,
                       ///actual m add hoga to (bool,check,async use krege)
@@ -221,7 +242,9 @@ class _DbHome6State extends State<DbHome6> {
                       ///update hoga ya add (else use krke
                       bool check = await dbHelper.addNote(
                           title: titleController.text,
-                          desc: descController.text);
+                          desc: descController.text,
+                          createdAt: DateTime.now().millisecondsSinceEpoch.toString(),
+                      );
 
                       ///title desc empty nhe hoga to add hoga,
                       ///actual m add hoga to (bool,check,async use krege)
