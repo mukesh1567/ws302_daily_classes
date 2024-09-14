@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ws302_daily_classes/m09/ws10/pro_provider10.dart';
+import 'package:ws302_daily_classes/m09/ws10_provider_addcontact/pro_provider10.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ws302_daily_classes/m09/ws10/add_contact/p_listmap_provider10.dart';
+import 'package:ws302_daily_classes/m09/ws10_provider_addcontact/add_contact/p_listmap_provider10.dart';
 
 
 class AddContact10 extends StatelessWidget{
